@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "203617750689",
+    "project_id": "bdintituto",
+    "storage_bucket": "bdintituto.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203617750689:android:4fdfe67e7e76b20082aae0",
+        "android_client_info": {
+          "package_name": "com.example.control_escuela"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203617750689-ldrfr4plq65c1a345jhmnslr741l0ipg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzKSiqvJ0FgqP9gwAIYPS4tGfXp3uHrRo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203617750689-ldrfr4plq65c1a345jhmnslr741l0ipg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

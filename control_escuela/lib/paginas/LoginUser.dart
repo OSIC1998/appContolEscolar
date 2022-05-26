@@ -1,7 +1,10 @@
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:control_escuela/consultas/consulta_busqueda.dart';
+import 'package:control_escuela/consultas/consultasBDApp.dart';
 import 'package:control_escuela/paginas/campos.dart';
-import 'package:control_escuela/paginas/menu.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 
 
 class login extends StatefulWidget {
@@ -12,6 +15,14 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
+  final _keyForm=GlobalKey<FormState>();
+  final controlerU=TextEditingController();
+  final controlerP=TextEditingController();
+  @override
+  void initState(){
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,33 +49,44 @@ class _loginState extends State<login> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                      'Login',
-                      style: TextStyle(
-                          fontSize: 28.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
+              child: Form(
+                key: _keyForm,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    const Text(
+                        'Login',
+                        style: TextStyle(
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                    camposGeneral("Ususario", controlerU),
+                    SizedBox(
+                      height: 10,
                     ),
-                  camposUsuario(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  camposPass(),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  botonIngresarLogin(context),
-                ],
+                    camposPass("Password", controlerP),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    botonIngresarLogin(context, controlerU, controlerP),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    this.controlerU.dispose();
+    this.controlerP.dispose();
   }
 }
 

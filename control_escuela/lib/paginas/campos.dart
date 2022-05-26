@@ -1,3 +1,5 @@
+import 'package:control_escuela/consultas/consulta_busqueda.dart';
+import 'package:control_escuela/consultas/consultasBDApp.dart';
 import 'package:control_escuela/paginas/LoginUser.dart';
 import 'package:control_escuela/paginas/RegistrarCalificaciones.dart';
 import 'package:control_escuela/paginas/menu.dart';
@@ -7,14 +9,18 @@ import 'package:control_escuela/paginas/reportes.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+late Busqueda B=new Busqueda();
+late BD bd=new BD();
 
 
-Widget camposUsuario() {
+Widget camposGeneral(String Ncampo, TextEditingController) {
   return Container(
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      child: TextField(
+      child: TextFormField(
+        controller: TextEditingController,
         decoration: InputDecoration(
-            hintText: "Usuario", fillColor: Colors.white, filled: true),
+            hintText: Ncampo, fillColor: Colors.white, filled: true),
+            
       ));
 }
 
@@ -28,18 +34,19 @@ Widget camposRelevo(String campo) {
 }
 
 
-Widget camposPass() {
+Widget camposPass(String Ncampo, TextEditingController) {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
     child: TextField(
+      controller: TextEditingController,
       obscureText: true,
       decoration: InputDecoration(
-        hintText: "Password", fillColor: Colors.white, filled: true),
+        hintText: Ncampo, fillColor: Colors.white, filled: true),
     )
   );
 }
 
-Widget botonIngresarLogin(BuildContext context) {
+Widget botonIngresarLogin(BuildContext context, TextEditingController CU, TextEditingController CP) {
   return Container(
     width: double.infinity,
     child: MaterialButton(
@@ -49,8 +56,47 @@ Widget botonIngresarLogin(BuildContext context) {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0)
         ),
-        onPressed: (){
-          Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: menuapp()));
+        onPressed: () async {
+          if(CU.text=="" || CP.text==""){
+            showDialog(context: context, builder: (context)=>AlertDialog(
+              content: Text("llenar los campos vasios"),
+              actions: <Widget>[
+                FlatButton(onPressed: (){Navigator.of(context).pop();}, child: Text("ok"))
+              ],
+            ));
+          }
+          else{
+            String titulA="";
+            String contenidoA="";
+            int R= await B.login(CU.text, CP.text);
+            switch(R)
+            {
+              case 2:{
+                Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: menuapp()));
+              }
+              break;
+              case 1:{
+                titulA="usuario no tiene permiso";
+                contenidoA="usuario no cuenta con el nivel nesesarrio para ingresar a la app";
+              }
+              break;
+              default:{
+                titulA="usuario no encontrado";
+                contenidoA="usuario o contraseña incorrectos";
+              }
+              break;
+              
+            }
+            if(R==0){
+              showDialog(context: context, builder: (context)=>AlertDialog(
+                title: Text("usuario no encontrado"),
+                content: Text("usuario o contraseña incorrectos"),
+                actions: <Widget>[
+                  FlatButton(onPressed: (){Navigator.of(context).pop();}, child: Text("ok"))
+                ],
+              ));
+            }
+          }
         },
         child: Text(
           "iniciar sesion",
