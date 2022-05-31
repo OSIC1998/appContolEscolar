@@ -5,7 +5,6 @@ import 'package:control_escuela/consultas/consultasBDApp.dart';
 
 class Busqueda{
   late BD bd=new BD();
-  late campos c=new campos();
   
   Future<QuerySnapshot> buscarDatos(String tabla) async
   {

@@ -78,22 +78,5 @@ class BD{
   ////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  void create() async {
-  try {
-    await firestore.collection('tipo_usuario').doc().set({
-      'nombre': 'dosente',
-      'tipo': '1',
-    });
-  } catch (e) {
-    print(e);
-  }
-}
-
-}
-
-class campos{
-  
 }
 
